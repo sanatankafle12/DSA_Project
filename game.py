@@ -54,10 +54,11 @@ def drawBoard(screen,board):
                 p.draw.rect(screen,color,p.Rect(c*SQ_SIZE,r*SQ_SIZE,SQ_SIZE,SQ_SIZE))
 
 def drawPieces(screen,board,image,location,move):
-    if(move==1):
+    '''if(move==1):
         screen.blit(image, p.Rect(location[0]*SQ_SIZE,location[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
         board[location[1]][location[0]] == 'hh'
-        return
+        return'''
+    
     screen.blit(image, p.Rect(location[0]*SQ_SIZE,location[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
     board[location[1]][location[0]] = '++'
 
@@ -83,4 +84,9 @@ def green_square(screen, board, location):
             if (i[1]<0 or i[0]<0 or i[0]>7 or i[1]>7):
                 valid_square.remove(i)
             else:
-                p.draw.rect(screen,'Green',p.Rect(i[0]*SQ_SIZE,i[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
+                if(board[i[1]][i[0]]=='--'):
+                    p.draw.rect(screen,'LightGreen',p.Rect(i[0]*SQ_SIZE,i[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
+    
+
+
+
