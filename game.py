@@ -31,9 +31,8 @@ def main():
                     location = (col,row)
                     if(check_valid(screen, gs.board, location)):
                         drawBoard(screen, gs.board)
-                        drawPieces(screen, gs.board, image,location,move)
-                        green_square(screen, gs.board, location)
-                        move = move+1                        
+                        drawPieces(screen, gs.board, image,location,move)   
+                        green_square(screen, gs.board, location)      
         clock.tick(MAX_FPS)
         p.display.flip()
 '''
@@ -86,7 +85,10 @@ def green_square(screen, board, location):
             else:
                 if(board[i[1]][i[0]]=='--'):
                     p.draw.rect(screen,'LightGreen',p.Rect(i[0]*SQ_SIZE,i[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
-    
+
+    if location in valid_square:
+        return True
+    False
 
 
 
