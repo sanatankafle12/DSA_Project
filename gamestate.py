@@ -14,4 +14,3 @@ class Gamestate():
 
         self.movelog = []
     
-    
