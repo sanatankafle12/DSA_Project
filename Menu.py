@@ -1,7 +1,7 @@
 import pygame
 import sys
 from game import *
-
+from solve import *
 
 pygame.init()
 screen = pygame.display.set_mode((400,400))
@@ -41,6 +41,7 @@ def Menu():
             main()
 
         if button_solve.draw():
+            Solve()
             pygame.quit()
 
 

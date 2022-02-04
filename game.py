@@ -1,14 +1,16 @@
 import gamestate
 import pygame as p
+from DsImplementation import *
 
 WIDTH = HEIGHT = 512
-DIMENSION = 8
+DIMENSION = 5
 SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 15
 
+s = Stack()
 
 def main():
-    move = 1
+    move = -1
     p.init()
     screen = p.display.set_mode((WIDTH+150,HEIGHT))
     clock = p.time.Clock()
@@ -29,17 +31,29 @@ def main():
                     col = location[0]//SQ_SIZE
                     row = location[1]//SQ_SIZE
                     location = (col,row)
-                    if(check_valid(screen, gs.board, location)):
-                        drawBoard(screen, gs.board)
-                        drawPieces(screen, gs.board, image,location,move)   
-                        green_square(screen, gs.board, location)      
+                    if check_if_empty(gs.board) == True:
+                        return False
+                    else:
+                        s.show()
+                        if(move == -1):
+                            move = move + 1
+                            if (check_valid(screen, gs.board, location)): 
+                                s.push(location)
+                                drawBoard(screen, gs.board)
+                                drawPieces(screen, gs.board, image,location,move)   
+                                green_square(screen, gs.board, location) 
+                        else:
+                            prev_location = s.items[move]
+                            if(square(screen, gs.board,location,prev_location)):
+                                move = move + 1
+                                s.push(location)
+                                drawBoard(screen, gs.board)
+                                drawPieces(screen, gs.board, image,location,move)   
+                                green_square(screen, gs.board, location)
+                                
         clock.tick(MAX_FPS)
         p.display.flip()
-'''
-def drawGameState(screen,gs,image):
-    drawBoard(screen,gs.board)
-    drawPieces(screen,gs.board,image)
-'''
+
 
 def drawBoard(screen,board):
     colors = [p.Color('white'),p.Color('gray')]
@@ -53,15 +67,11 @@ def drawBoard(screen,board):
                 p.draw.rect(screen,color,p.Rect(c*SQ_SIZE,r*SQ_SIZE,SQ_SIZE,SQ_SIZE))
 
 def drawPieces(screen,board,image,location,move):
-    '''if(move==1):
-        screen.blit(image, p.Rect(location[0]*SQ_SIZE,location[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
-        board[location[1]][location[0]] == 'hh'
-        return'''
-    
     screen.blit(image, p.Rect(location[0]*SQ_SIZE,location[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
     board[location[1]][location[0]] = '++'
 
 def check_valid(screen,board,location):
+
     if(board[location[1]][location[0]] == "--"):
         return True
     return False
@@ -80,15 +90,42 @@ def green_square(screen, board, location):
     valid_square.append((col-1,row-2))
     for j in range(len(valid_square)):
         for i in valid_square:
-            if (i[1]<0 or i[0]<0 or i[0]>7 or i[1]>7):
+            if (i[1]<0 or i[0]<0 or i[0]>(DIMENSION-1) or i[1]>(DIMENSION-1)):
                 valid_square.remove(i)
             else:
                 if(board[i[1]][i[0]]=='--'):
                     p.draw.rect(screen,'LightGreen',p.Rect(i[0]*SQ_SIZE,i[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
+    if(valid_square == []):
+        return False
 
-    if location in valid_square:
+def check_if_empty(board):
+    count = 0
+    for i in range(DIMENSION):
+        for j in range(DIMENSION):
+            if(board[i][j]=='--'):
+                count = count + 1
+    if(count == 1 ):
         return True
-    False
+    return False
 
-
-
+def square(screen,board,location,prev_location):
+    valid_square = []
+    row = prev_location[1]
+    col = prev_location[0]
+    valid_square.append((col+2,row+1))
+    valid_square.append((col+1,row+2))
+    valid_square.append((col-2,row+1))
+    valid_square.append((col-1,row+2))
+    valid_square.append((col+2,row-1))
+    valid_square.append((col+1,row-2))
+    valid_square.append((col-2,row-1))
+    valid_square.append((col-1,row-2))
+    for j in range(len(valid_square)):
+        for i in valid_square:
+            if (i[1]<0 or i[0]<0 or i[0]>(DIMENSION-1) or i[1]>(DIMENSION-1)):
+                valid_square.remove(i)
+    print(valid_square)
+    for i in valid_square:
+        if location == i:
+            return True
+    return False
