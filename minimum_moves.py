@@ -2,15 +2,18 @@ import gamestate
 import sys
 import pygame as p
 from DsImplementation import *
+import random
 
 WIDTH = HEIGHT = 512
-DIMENSION = 5
+DIMENSION = 8
 SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 15
 
 s = Stack()
 
+
 def main():
+
     move = -1
     p.init()
     screen = p.display.set_mode((WIDTH+150,HEIGHT))
@@ -21,11 +24,16 @@ def main():
     gs = gamestate.Gamestate(DIMENSION)
     image = p.transform.scale(p.image.load('images\knights.jpg'),(SQ_SIZE,SQ_SIZE))
     running = True
-    sqSelected = ()
-    location = ()
     drawBoard(screen, gs.board)
-    while running:        
-
+    locations = get_positions()
+    start = locations[0]
+    end = locations[1]
+    gs.board[start[1]][start[0]] = 'ee'
+    gs.board[end[1]][end[0]] = 'ee'
+    p.draw.rect(screen,'pink',p.Rect(start[0]*SQ_SIZE,start[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
+    p.draw.rect(screen,'orange',p.Rect(end[0]*SQ_SIZE,end[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
+    print(start,end)
+    while running:   
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
@@ -35,26 +43,31 @@ def main():
                     col = location[0]//SQ_SIZE
                     row = location[1]//SQ_SIZE
                     location = (col,row)
+                    print(location)
+                    print(move)
                     if check_if_empty(gs.board) == True :
                         return False
                     else:
                         if(move == -1):
-                            if (check_valid(screen, gs.board, location)): 
-                                move = move + 1
-                                drawBoard(screen, gs.board)
-                                drawPieces(screen, gs.board, image,location,move)   
-                                green_square(screen, gs.board, location) 
-                                s.push(location)
+                            if(location == start):
+                                if (check_valid(screen, gs.board, location,move)): 
+                                    move = move + 1
+                                    drawBoard(screen, gs.board)
+                                    drawPieces(screen, gs.board, image,location,move)   
+                                    green_square(screen, gs.board, location) 
+                                    s.push(location)
                         else:
                             prev_location = s.items[move]
-                            if(square(screen, gs.board,location,prev_location) and check_valid(screen, gs.board, location)):
+                            if(square(screen, gs.board,location,prev_location) and check_valid(screen, gs.board, location,move)):
                                 move = move + 1
                                 drawBoard(screen, gs.board)
-                                drawPieces(screen, gs.board, image,location,move)   
+                                drawPieces(screen, gs.board, image,location,move) 
+                                if(location == end):
+                                    running = False      
                                 green_square(screen, gs.board, location)
                                 s.push(location)
                                 if(loss(screen, gs.board, location)):
-                                    running = False                         
+                                    running = False                     
         clock.tick(MAX_FPS)
         p.display.flip()
 
@@ -72,12 +85,14 @@ def drawBoard(screen,board):
 
 def drawPieces(screen,board,image,location,move):
     screen.blit(image, p.Rect(location[0]*SQ_SIZE,location[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
+    if(move == 0):
+        return
     board[location[1]][location[0]] = '++'
 
-def check_valid(screen,board,location):
+def check_valid(screen,board,location,move):
     if(location[0] < 0 or location[0] > (DIMENSION-1) or location[1] < 0 or location[1] > (DIMENSION-1)):
         return
-    if(board[location[1]][location[0]] == "--"):
+    if(board[location[1]][location[0]] == "--" or move == -1 or board[location[1]][location[0]] == "ee"):
         return True
     return False
 
@@ -100,6 +115,7 @@ def green_square(screen, board, location):
             else:
                 if(board[i[1]][i[0]]=='--'):
                     p.draw.rect(screen,'LightGreen',p.Rect(i[0]*SQ_SIZE,i[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
+    print(valid_square)
     return valid_square
 
 def check_if_empty(board):
@@ -124,3 +140,18 @@ def loss(screen,board,location):
     if(valid_square == []):
         return True
     return False
+
+def get_positions():
+    array = [0,1,2,3,4,5,6,7]
+    start_col = random.choice(array)
+    start_row = random.choice(array)
+    destination_col = random.choice(array)
+    destination_row = random.choice(array)
+    if(destination_col == start_col and destination_row == start_row):
+        destination_col = random.choice(array)
+        destination_row = random.choice(array)
+    start = (start_col,start_row)
+    destination = (destination_col,destination_row)
+    return start,destination
+
+main()

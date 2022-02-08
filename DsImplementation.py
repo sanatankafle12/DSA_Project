@@ -13,3 +13,5 @@ class Stack:
 
     def show(self):
         return [x for x in self.items]
+
+

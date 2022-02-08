@@ -1,2 +1,0 @@
-def Solve():
-    print('hello')
