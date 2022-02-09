@@ -28,8 +28,8 @@ def Menu():
             main()
 
         if button_solve.draw():
-            Solve()
             pygame.quit()
+            Solve()
 
 
         for event in pygame.event.get():

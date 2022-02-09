@@ -1,6 +1,6 @@
 import DsImplementation
 
-n = 5
+n = 6
 import time
 
 s1 = DsImplementation.Stack()
@@ -27,12 +27,12 @@ def solveKT():
   move_y = [1, 2, 2, 1, -1, -2, -2, -1] 
   
   
-  board[3][1] = 0
+  board[1][1] = 0
   
  
   pos = 1
    
-  if(not solveKTUtil(board, 3, 1, move_x, move_y, pos)): 
+  if(not solveKTUtil(board, 1, 1, move_x, move_y, pos)): 
     print("Solution does not exist") 
   else: 
     printSolution(board) 
