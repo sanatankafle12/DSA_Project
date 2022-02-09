@@ -14,7 +14,7 @@ def Solve():
     clock = p.time.Clock()
     screen.fill(p.Color("black"))
     gs = gamestate.Gamestate(n)
-    image = p.transform.scale(p.image.load('images\mark.png'),(SQ_SIZE,SQ_SIZE))
+    image = p.transform.scale(p.image.load('images\knights.jpg'),(SQ_SIZE,SQ_SIZE))
     running = True
     location = ()
     drawBoard(screen, gs.board)
@@ -52,9 +52,11 @@ def solveKT(location,screen,board,image):
     else:
         for i in range(len(q1.items)):
             j = q1.dequeue()
-            Solution(screen, image, board, j,pos)
+            Solution(screen, image, board, j)
+            time.sleep(0.2)
+            p.display.update()
             
-def Solution(screen,image,board,j,pos):
+def Solution(screen,image,board,j):
     screen.blit(image, p.Rect(j[1]*(SQ_SIZE),j[0]*(SQ_SIZE),(SQ_SIZE),(SQ_SIZE)))
 
 def solveKTUtil(board,curr_x,curr_y,move_x,move_y,pos):   
