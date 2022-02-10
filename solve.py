@@ -3,7 +3,7 @@ from game import *
 import gamestate
 import time
 
-n = 5
+n = 6
 
 s1 = DsImplementation.Stack()
 q1 = DsImplementation.Queue()
@@ -15,6 +15,7 @@ def Solve():
     screen.fill(p.Color("black"))
     gs = gamestate.Gamestate(n)
     image = p.transform.scale(p.image.load('images\knights.jpg'),(SQ_SIZE,SQ_SIZE))
+    mark = p.transform.scale(p.image.load('images\mark.png'),(SQ_SIZE,SQ_SIZE))
     running = True
     location = ()
     drawBoard(screen, gs.board)
@@ -28,6 +29,7 @@ def Solve():
                     col = location[0]//SQ_SIZE
                     row = location[1]//SQ_SIZE
                     location = (col,row)
+                    screen.blit(mark, p.Rect(location[0]*(SQ_SIZE),location[1]*(SQ_SIZE),(SQ_SIZE),(SQ_SIZE)))
                     solveKT(location,screen,gs.board,image)
         clock.tick(MAX_FPS)
         p.display.flip()
@@ -47,17 +49,19 @@ def solveKT(location,screen,board,image):
   
     pos = 1
    
-    if(not solveKTUtil(board, location[1], location[0], move_x, move_y, pos)): 
+    if(not solveKTUtil(board, location[1], location[0], move_x, move_y, pos)):
         print("Solution does not exist") 
     else:
         for i in range(len(q1.items)):
             j = q1.dequeue()
-            Solution(screen, image, board, j)
-            time.sleep(0.2)
+            font = p.font.Font('fsb.ttf', 50)
+            text = font.render(str(i+1), True,'green')
+            Solution(screen, board, j,text)
+            time.sleep(0.1)
             p.display.update()
             
-def Solution(screen,image,board,j):
-    screen.blit(image, p.Rect(j[1]*(SQ_SIZE),j[0]*(SQ_SIZE),(SQ_SIZE),(SQ_SIZE)))
+def Solution(screen,board,j,text):
+    screen.blit(text, p.Rect(j[1]*(SQ_SIZE),j[0]*(SQ_SIZE),(SQ_SIZE),(SQ_SIZE)))
 
 def solveKTUtil(board,curr_x,curr_y,move_x,move_y,pos):   
     if(pos == n**2): 
@@ -72,3 +76,6 @@ def solveKTUtil(board,curr_x,curr_y,move_x,move_y,pos):
                 return True
             board[new_x][new_y] = -1
     return False
+
+
+Solve()

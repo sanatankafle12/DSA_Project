@@ -4,7 +4,7 @@ import pygame as p
 from DsImplementation import *
 
 WIDTH = HEIGHT = 512
-DIMENSION = 5
+DIMENSION = 6
 SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 15
 

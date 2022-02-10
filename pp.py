@@ -1,62 +1,73 @@
-import DsImplementation
-
-n = 6
-import time
-
-s1 = DsImplementation.Stack()
-
-def isSafe(x,y,board): 
-  
-  if(x >= 0 and y >= 0 and x < n and y < n and board[x][y] == -1): 
-    return True
-  return False
-def printSolution(board): 
-  
-  for i in range(n): 
-    for j in range(n): 
-      print(board[i][j],end =' ') 
-    print() 
-def solveKT(): 
-  
-  
-  
-  board = [[-1 for i in range(n)]for i in range(n)] 
-  
-  
-  move_x = [2, 1, -1, -2, -2, -1, 1, 2] 
-  move_y = [1, 2, 2, 1, -1, -2, -2, -1] 
-  
-  
-  board[1][1] = 0
-  
+# import pygame module in this program
+import pygame
  
-  pos = 1
-   
-  if(not solveKTUtil(board, 1, 1, move_x, move_y, pos)): 
-    print("Solution does not exist") 
-  else: 
-    printSolution(board) 
-
-def solveKTUtil(board,curr_x,curr_y,move_x,move_y,pos): 
-  
-  
-  if(pos == n**2): 
-    return True
-  
+# activate the pygame library
+# initiate pygame and give permission
+# to use pygame's functionality.
+pygame.init()
  
-  for i in range(8): 
-    new_x = curr_x + move_x[i] 
-    new_y = curr_y + move_y[i] 
-    if(isSafe(new_x,new_y,board)): 
-      board[new_x][new_y] = pos 
-      if(solveKTUtil(board,new_x,new_y,move_x,move_y,pos+1)): 
-        s1.push((new_x,new_y))
-        return True
-      board[new_x][new_y] = -1
-  return False
-    
-if __name__ == "__main__": 
-  start = time.time()
-  solveKT()
-  print(s1.show())
-  print(time.time()-start)
+# define the RGB value for white,
+#  green, blue colour .
+white = (255, 255, 255)
+green = (0, 255, 0)
+blue = (0, 0, 128)
+ 
+# assigning values to X and Y variable
+X = 400
+Y = 400
+ 
+# create the display surface object
+# of specific dimension..e(X, Y).
+display_surface = pygame.display.set_mode((X, Y))
+ 
+# set the pygame window name
+pygame.display.set_caption('Show Text')
+ 
+# create a font object.
+# 1st parameter is the font file
+# which is present in pygame.
+# 2nd parameter is size of the font
+font = pygame.font.Font('fsb.ttf', 32)
+ 
+# create a text surface object,
+# on which text is drawn on it.
+pos = 1 
+
+text = font.render(str(pos), True, green, blue)
+ 
+# create a rectangular object for the
+# text surface object
+textRect = text.get_rect()
+ 
+# set the center of the rectangular object.
+textRect.center = (X // 2, Y // 2)
+ 
+# infinite loop
+while True:
+ 
+    # completely fill the surface object
+    # with white color
+    display_surface.fill(white)
+ 
+    # copying the text surface object
+    # to the display surface object
+    # at the center coordinate.
+    display_surface.blit(text, textRect)
+ 
+    # iterate over the list of Event objects
+    # that was returned by pygame.event.get() method.
+    for event in pygame.event.get():
+ 
+        # if event object type is QUIT
+        # then quitting the pygame
+        # and program both.
+        if event.type == pygame.QUIT:
+ 
+            # deactivates the pygame library
+            pygame.quit()
+ 
+            # quit the program.
+            quit()
+ 
+        # Draws the surface object to the screen.
+        pygame.display.update()
