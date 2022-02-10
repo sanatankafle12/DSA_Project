@@ -153,5 +153,3 @@ def get_positions():
     start = (start_col,start_row)
     destination = (destination_col,destination_row)
     return start,destination
-
-main()

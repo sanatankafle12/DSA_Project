@@ -2,6 +2,7 @@ import pygame
 import sys
 from game import *
 from solve import *
+from minimum_moves import *
 from gamestate import *
 
 pygame.init()
@@ -14,6 +15,7 @@ def Menu():
     solve = pygame.image.load('images/SOLVE.png').convert_alpha()
     button_play = Button(150, 300, play,screen)
     button_solve = Button(150, 350, solve,screen) 
+    button_solve2 = Button(10, 350, solve,screen) 
     pygame.mixer.init()
     crash_sound = pygame.mixer.Sound("sounds/background.wav")
     crash_sound.set_volume(0.2)
@@ -30,6 +32,10 @@ def Menu():
         if button_solve.draw():
             pygame.quit()
             Solve()
+        
+        if button_solve2.draw():
+            pygame.quit()
+            main()
 
 
         for event in pygame.event.get():

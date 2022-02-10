@@ -77,5 +77,3 @@ def solveKTUtil(board,curr_x,curr_y,move_x,move_y,pos):
             board[new_x][new_y] = -1
     return False
 
-
-Solve()
