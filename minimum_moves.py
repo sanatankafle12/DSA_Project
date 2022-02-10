@@ -12,7 +12,7 @@ MAX_FPS = 15
 s = Stack()
 
 
-def main():
+def main2():
 
     move = -1
     p.init()

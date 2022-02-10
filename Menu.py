@@ -35,7 +35,7 @@ def Menu():
         
         if button_solve2.draw():
             pygame.quit()
-            main()
+            main2()
 
 
         for event in pygame.event.get():
