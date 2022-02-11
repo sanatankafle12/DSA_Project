@@ -57,7 +57,7 @@ def solveKT(location,screen,board,image):
             font = p.font.Font('fsb.ttf', 50)
             text = font.render(str(i+1), True,'green')
             Solution(screen, board, j,text)
-            time.sleep(0.1)
+            time.sleep(0.05)
             p.display.update()
             
 def Solution(screen,board,j,text):

@@ -21,7 +21,6 @@ def main():
     gs = gamestate.Gamestate(DIMENSION)
     image = p.transform.scale(p.image.load('images\knights.jpg'),(SQ_SIZE,SQ_SIZE))
     running = True
-    sqSelected = ()
     location = ()
     drawBoard(screen, gs.board)
     while running:        
