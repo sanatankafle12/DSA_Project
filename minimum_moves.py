@@ -3,6 +3,7 @@ import sys
 import pygame as p
 from DsImplementation import *
 import random
+from minimum_moves_solution import *
 
 WIDTH = HEIGHT = 512
 DIMENSION = 8
@@ -32,7 +33,6 @@ def main2():
     gs.board[end[1]][end[0]] = 'ee'
     p.draw.rect(screen,'pink',p.Rect(start[0]*SQ_SIZE,start[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
     p.draw.rect(screen,'orange',p.Rect(end[0]*SQ_SIZE,end[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
-    print(start,end)
     while running:   
         for e in p.event.get():
             if e.type == p.QUIT:
@@ -43,8 +43,6 @@ def main2():
                     col = location[0]//SQ_SIZE
                     row = location[1]//SQ_SIZE
                     location = (col,row)
-                    print(location)
-                    print(move)
                     if check_if_empty(gs.board) == True :
                         return False
                     else:
@@ -63,7 +61,9 @@ def main2():
                                 drawBoard(screen, gs.board)
                                 drawPieces(screen, gs.board, image,location,move) 
                                 if(location == end):
-                                    running = False      
+                                    print(move)
+                                    if(check_optimal(start,end,move) ):
+                                        running = False
                                 green_square(screen, gs.board, location)
                                 s.push(location)
                                 if(loss(screen, gs.board, location)):
@@ -115,7 +115,6 @@ def green_square(screen, board, location):
             else:
                 if(board[i[1]][i[0]]=='--'):
                     p.draw.rect(screen,'LightGreen',p.Rect(i[0]*SQ_SIZE,i[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
-    print(valid_square)
     return valid_square
 
 def check_if_empty(board):
@@ -139,6 +138,7 @@ def loss(screen,board,location):
     valid_square = green_square(screen, board, location)
     if(valid_square == []):
         return True
+
     return False
 
 def get_positions():
@@ -153,3 +153,9 @@ def get_positions():
     start = (start_col,start_row)
     destination = (destination_col,destination_row)
     return start,destination
+
+def check_optimal(start,end,move):
+    src = Node(start[0],start[1])
+    dest = Node(end[0], end[1])
+    print(findShortestDistance(src, dest, DIMENSION))
+    return findShortestDistance(src, dest, DIMENSION) == move
