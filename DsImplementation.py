@@ -27,3 +27,4 @@ class Queue:
     
     def dequeue(self):
         return self.items.pop()
+
