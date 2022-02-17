@@ -42,11 +42,3 @@ def findShortestDistance(src, dest, N):
                 if isValid(x1, y1, N):
                     q.append(Node(x1, y1, dist + 1))
 
-
-if __name__ == '__main__':
- 
-    N = 8               
-    src = Node(0, 7)    
-    dest = Node(7, 0)   
-    print("The minimum number of steps required is",
-          findShortestDistance(src, dest, N))

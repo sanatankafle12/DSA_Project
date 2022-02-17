@@ -6,7 +6,7 @@ import random
 from minimum_moves_solution import *
 
 WIDTH = HEIGHT = 512
-DIMENSION = 8
+DIMENSION = 16
 SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 15
 
@@ -14,7 +14,6 @@ s = Stack()
 
 
 def main2():
-
     move = -1
     p.init()
     screen = p.display.set_mode((WIDTH+150,HEIGHT))
@@ -62,7 +61,7 @@ def main2():
                                 drawPieces(screen, gs.board, image,location,move) 
                                 if(location == end):
                                     print(move)
-                                    if(check_optimal(start,end,move) ):
+                                    if(check_optimal(start,end,move)):
                                         running = False
                                 green_square(screen, gs.board, location)
                                 s.push(location)

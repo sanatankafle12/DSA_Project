@@ -8,18 +8,27 @@ n = 6
 s1 = DsImplementation.Stack()
 q1 = DsImplementation.Queue()
 
+
 def Solve():
-    p.init()
+    p.init()    
+    start = 0
+    end = 0
     screen = p.display.set_mode((WIDTH+150,HEIGHT))
     clock = p.time.Clock()
     screen.fill(p.Color("black"))
     gs = gamestate.Gamestate(n)
     image = p.transform.scale(p.image.load('images\knights.jpg'),(SQ_SIZE,SQ_SIZE))
     mark = p.transform.scale(p.image.load('images\mark.png'),(SQ_SIZE,SQ_SIZE))
+    img1 = p.image.load('images\game2.png')
     running = True
     location = ()
     drawBoard(screen, gs.board)
-    while running:        
+    while running: 
+        screen.blit(img1,(WIDTH-2,0))     
+        font = p.font.Font('fsb.ttf', 20)
+        score = "TIME: " + str(round(end-start,2))
+        text = font.render(score, True,'green') 
+        screen.blit(text,(WIDTH+10,HEIGHT-75))   
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
@@ -30,7 +39,9 @@ def Solve():
                     row = location[1]//SQ_SIZE
                     location = (col,row)
                     screen.blit(mark, p.Rect(location[0]*(SQ_SIZE),location[1]*(SQ_SIZE),(SQ_SIZE),(SQ_SIZE)))
-                    solveKT(location,screen,gs.board,image)
+                    start = time.time()
+                    end = solveKT(location,screen,gs.board,image) 
+                    
         clock.tick(MAX_FPS)
         p.display.flip()
 
@@ -52,6 +63,7 @@ def solveKT(location,screen,board,image):
     if(not solveKTUtil(board, location[1], location[0], move_x, move_y, pos)):
         print("Solution does not exist") 
     else:
+        end = time.time()
         for i in range(len(q1.items)):
             j = q1.dequeue()
             font = p.font.Font('fsb.ttf', 50)
@@ -59,6 +71,7 @@ def solveKT(location,screen,board,image):
             Solution(screen, board, j,text)
             time.sleep(0.05)
             p.display.update()
+        return(end)
             
 def Solution(screen,board,j,text):
     screen.blit(text, p.Rect(j[1]*(SQ_SIZE),j[0]*(SQ_SIZE),(SQ_SIZE),(SQ_SIZE)))

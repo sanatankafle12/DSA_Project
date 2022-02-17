@@ -2,6 +2,7 @@ import gamestate
 import sys
 import pygame as p
 from DsImplementation import *
+import random
 
 WIDTH = HEIGHT = 512
 DIMENSION = 6
@@ -11,20 +12,26 @@ MAX_FPS = 15
 s = Stack()
 
 def main():
+    array = [0,1,2,3,4,5]
+    start_col = random.choice(array)
+    start_row = random.choice(array)
     move = -1
     p.init()
     screen = p.display.set_mode((WIDTH+150,HEIGHT))
-    solve = p.image.load('images/SOLVE.png').convert_alpha()
-    redo = gamestate.Button(WIDTH,HEIGHT//2,solve,screen)
     clock = p.time.Clock()
-    screen.fill(p.Color("black"))
+    screen.fill(p.Color("brown"))
     gs = gamestate.Gamestate(DIMENSION)
     image = p.transform.scale(p.image.load('images\knights.jpg'),(SQ_SIZE,SQ_SIZE))
+    img1 = p.image.load('images\game1.png')
     running = True
     location = ()
     drawBoard(screen, gs.board)
-    while running:        
-
+    while running:  
+        screen.blit(img1,(WIDTH-2,0))
+        font = p.font.Font('fsb.ttf', 30)
+        score = "MOVE: " + str(move+1)
+        text = font.render(score, True,'green') 
+        screen.blit(text,(WIDTH+15,HEIGHT-75)) 
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
@@ -39,21 +46,25 @@ def main():
                     else:
                         if(move == -1):
                             if (check_valid(screen, gs.board, location)): 
+                                screen.fill(p.Color("brown"))
                                 move = move + 1
                                 drawBoard(screen, gs.board)
                                 drawPieces(screen, gs.board, image,location,move)   
                                 green_square(screen, gs.board, location) 
                                 s.push(location)
+
                         else:
                             prev_location = s.items[move]
                             if(square(screen, gs.board,location,prev_location) and check_valid(screen, gs.board, location)):
                                 move = move + 1
+                                screen.fill(p.Color("brown"))
                                 drawBoard(screen, gs.board)
                                 drawPieces(screen, gs.board, image,location,move)   
                                 green_square(screen, gs.board, location)
                                 s.push(location)
                                 if(loss(screen, gs.board, location)):
-                                    running = False                         
+                                    running = False  
+                                
         clock.tick(MAX_FPS)
         p.display.flip()
 
