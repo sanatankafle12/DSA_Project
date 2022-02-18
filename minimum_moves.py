@@ -6,7 +6,7 @@ import random
 from minimum_moves_solution import *
 
 WIDTH = HEIGHT = 512
-DIMENSION = 16
+DIMENSION = 8
 SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 15
 
@@ -33,12 +33,21 @@ def main2():
     p.draw.rect(screen,'pink',p.Rect(start[0]*SQ_SIZE,start[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
     p.draw.rect(screen,'orange',p.Rect(end[0]*SQ_SIZE,end[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
     img3 = p.image.load('images\game3.png')
+    src = Node(start[0],start[1])
+    dest = Node(end[0], end[1])
+    x = findShortestDistance(src, dest, DIMENSION)
+    if(x<=2):
+        level = "Easy"
+    elif(x<=4):
+        level = "Medium"
+    else:
+        level = "Difficult"
     while running:   
         screen.blit(img3,(WIDTH-2,0))
-        font = p.font.Font('fsb.ttf', 30)
-        score = "MOVE: " + str(move)
+        font = p.font.Font('fsb.ttf', 20)
+        score = "Level: "+level
         text = font.render(score, True,'green') 
-        screen.blit(text,(WIDTH+15,HEIGHT-75)) 
+        screen.blit(text,(WIDTH+10,HEIGHT-75)) 
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
@@ -162,5 +171,4 @@ def get_positions():
 def check_optimal(start,end,move):
     src = Node(start[0],start[1])
     dest = Node(end[0], end[1])
-    print(findShortestDistance(src, dest, DIMENSION))
     return findShortestDistance(src, dest, DIMENSION) == move
