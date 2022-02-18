@@ -19,7 +19,6 @@ def main():
     p.init()
     screen = p.display.set_mode((WIDTH+150,HEIGHT))
     clock = p.time.Clock()
-    screen.fill(p.Color("brown"))
     gs = gamestate.Gamestate(DIMENSION)
     image = p.transform.scale(p.image.load('images\knights.jpg'),(SQ_SIZE,SQ_SIZE))
     img1 = p.image.load('images\game1.png')
@@ -46,7 +45,6 @@ def main():
                     else:
                         if(move == -1):
                             if (check_valid(screen, gs.board, location)): 
-                                screen.fill(p.Color("brown"))
                                 move = move + 1
                                 drawBoard(screen, gs.board)
                                 drawPieces(screen, gs.board, image,location,move)   
@@ -57,7 +55,6 @@ def main():
                             prev_location = s.items[move]
                             if(square(screen, gs.board,location,prev_location) and check_valid(screen, gs.board, location)):
                                 move = move + 1
-                                screen.fill(p.Color("brown"))
                                 drawBoard(screen, gs.board)
                                 drawPieces(screen, gs.board, image,location,move)   
                                 green_square(screen, gs.board, location)

@@ -32,7 +32,13 @@ def main2():
     gs.board[end[1]][end[0]] = 'ee'
     p.draw.rect(screen,'pink',p.Rect(start[0]*SQ_SIZE,start[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
     p.draw.rect(screen,'orange',p.Rect(end[0]*SQ_SIZE,end[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
+    img3 = p.image.load('images\game3.png')
     while running:   
+        screen.blit(img3,(WIDTH-2,0))
+        font = p.font.Font('fsb.ttf', 30)
+        score = "MOVE: " + str(move)
+        text = font.render(score, True,'green') 
+        screen.blit(text,(WIDTH+15,HEIGHT-75)) 
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
