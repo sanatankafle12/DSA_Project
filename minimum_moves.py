@@ -75,7 +75,6 @@ def main2():
                                 drawBoard(screen, gs.board)
                                 drawPieces(screen, gs.board, image,location,move) 
                                 if(location == end):
-                                    print(move)
                                     if(check_optimal(start,end,move)):
                                         running = False
                                 green_square(screen, gs.board, location)

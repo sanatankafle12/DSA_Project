@@ -21,19 +21,17 @@ def isValid(x, y, N):
     return not (x < 0 or y < 0 or x >= N or y >= N)
  
 def findShortestDistance(src, dest, N):
- 
     visited = set()
     q = deque()
     q.append(src)
     while q:
         node = q.popleft()
- 
         x = node.x
         y = node.y
         dist = node.dist
         if x == dest.x and y == dest.y:
             return dist
- 
+        
         if node not in visited:
             visited.add(node)
             for i in range(len(row)):
@@ -42,3 +40,7 @@ def findShortestDistance(src, dest, N):
                 if isValid(x1, y1, N):
                     q.append(Node(x1, y1, dist + 1))
 
+if __name__ == "__main__":
+    src = Node(0,1)
+    dest = Node(7, 7)
+    print(findShortestDistance(src, dest, 8))
