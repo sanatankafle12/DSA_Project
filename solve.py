@@ -7,7 +7,10 @@ n = 6
 
 s1 = DsImplementation.Stack()
 q1 = DsImplementation.Queue()
-
+WIDTH = HEIGHT = 512
+DIMENSION = 6
+SQ_SIZE = HEIGHT // DIMENSION
+MAX_FPS = 15
 
 def Solve():
     p.init()    
@@ -61,7 +64,7 @@ def solveKT(location,screen,board,image):
     pos = 1
    
     if(not solveKTUtil(board, location[1], location[0], move_x, move_y, pos)):
-        print("Solution does not exist") 
+        return False
     else:
         end = time.time()
         for i in range(len(q1.items)):
@@ -93,4 +96,3 @@ def solveKTUtil(board,curr_x,curr_y,move_x,move_y,pos):
                 return True
             board[new_x][new_y] = -1
     return False
-

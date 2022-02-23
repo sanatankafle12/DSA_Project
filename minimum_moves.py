@@ -4,6 +4,7 @@ import pygame as p
 from DsImplementation import *
 import random
 from minimum_moves_solution import *
+from mm import *
 
 WIDTH = HEIGHT = 512
 DIMENSION = 8
@@ -76,11 +77,14 @@ def main2():
                                 drawPieces(screen, gs.board, image,location,move) 
                                 if(location == end):
                                     if(check_optimal(start,end,move)):
-                                        running = False
+                                        p.quit()
+                                        Won_screen() 
+                                    else:
+                                        p.quit()
+                                        lost_screen(start,end,move)               
                                 green_square(screen, gs.board, location)
                                 s.push(location)
-                                if(loss(screen, gs.board, location)):
-                                    running = False                     
+
         clock.tick(MAX_FPS)
         p.display.flip()
 
@@ -147,15 +151,8 @@ def square(screen,board,location,prev_location):
             return True
     return False
 
-def loss(screen,board,location):
-    valid_square = green_square(screen, board, location)
-    if(valid_square == []):
-        return True
-
-    return False
-
 def get_positions():
-    array = [0,1,2,3,4,5,6,7]
+    array = [x for x in range(DIMENSION)]
     start_col = random.choice(array)
     start_row = random.choice(array)
     destination_col = random.choice(array)
@@ -171,3 +168,44 @@ def check_optimal(start,end,move):
     src = Node(start[0],start[1])
     dest = Node(end[0], end[1])
     return findShortestDistance(src, dest, DIMENSION) == move
+
+def Won_screen():
+    p.init()
+    screen = p.display.set_mode((250,150))
+    screen.fill("lightblue")
+    while True:
+        font = p.font.Font('fsb.ttf', 20)
+        t = "           CONGRATS!!"
+        t1 = "      SOLUTION FOUND :)"
+        text = font.render(t, True,'Black')
+        text1 = font.render(t1, True, 'Black')
+        screen.blit(text,(0,50)) 
+        screen.blit(text1, (0,75))
+        for j in p.event.get():
+            if j.type == p.QUIT:
+                p.quit()
+            p.display.update()
+
+def lost_screen(start,end,move):
+    src = Node(start[0],start[1])
+    dest = Node(end[0], end[1])
+    x = findShortestDistance(src, dest, DIMENSION)
+    p.init()
+    screen = p.display.set_mode((250,150))
+    screen.fill("lightblue")
+    while True:
+        font = p.font.Font('fsb.ttf', 20)
+        t = "       OOPS!!"
+        t1 = "      optimal Move:" + str(x)
+        t2 = "      You took:" +str(move)
+        text = font.render(t, True,'Black')
+        text1 = font.render(t1, True, 'Black')
+        text2 = font.render(t2, True, 'Black')
+        screen.blit(text,(0,50)) 
+        screen.blit(text1, (0,75))
+        screen.blit(text2, (0,100))
+        for j in p.event.get():
+            if j.type == p.QUIT:
+                p.quit()
+            p.display.update()
+    

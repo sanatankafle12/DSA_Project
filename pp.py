@@ -1,73 +1,45 @@
-# import pygame module in this program
-import pygame
- 
-# activate the pygame library
-# initiate pygame and give permission
-# to use pygame's functionality.
-pygame.init()
- 
-# define the RGB value for white,
-#  green, blue colour .
-white = (255, 255, 255)
-green = (0, 255, 0)
-blue = (0, 0, 128)
- 
-# assigning values to X and Y variable
-X = 400
-Y = 400
- 
-# create the display surface object
-# of specific dimension..e(X, Y).
-display_surface = pygame.display.set_mode((X, Y))
- 
-# set the pygame window name
-pygame.display.set_caption('Show Text')
- 
-# create a font object.
-# 1st parameter is the font file
-# which is present in pygame.
-# 2nd parameter is size of the font
-font = pygame.font.Font('fsb.ttf', 32)
- 
-# create a text surface object,
-# on which text is drawn on it.
-pos = 1 
+chess_board = [[0,0,0,0,0,0,0,0],
+               [0,0,0,0,0,0,0,0],
+               [0,0,1,0,0,0,0,0],
+               [0,0,0,0,0,0,0,0],
+               [0,0,0,0,0,0,0,0],
+               [0,0,0,0,0,0,0,0],
+               [0,0,0,0,0,0,0,0],
+               [0,0,0,0,0,0,0,0]]
 
-text = font.render(str(pos), True, green, blue)
- 
-# create a rectangular object for the
-# text surface object
-textRect = text.get_rect()
- 
-# set the center of the rectangular object.
-textRect.center = (X // 2, Y // 2)
- 
-# infinite loop
-while True:
- 
-    # completely fill the surface object
-    # with white color
-    display_surface.fill(white)
- 
-    # copying the text surface object
-    # to the display surface object
-    # at the center coordinate.
-    display_surface.blit(text, textRect)
- 
-    # iterate over the list of Event objects
-    # that was returned by pygame.event.get() method.
-    for event in pygame.event.get():
- 
-        # if event object type is QUIT
-        # then quitting the pygame
-        # and program both.
-        if event.type == pygame.QUIT:
- 
-            # deactivates the pygame library
-            pygame.quit()
- 
-            # quit the program.
-            quit()
- 
-        # Draws the surface object to the screen.
-        pygame.display.update()
+def print_board():
+    for i in range(8):
+        for j in range(8):
+            print(chess_board[i][j], end=" ")
+        print("\n")
+
+
+
+
+def get_possibilities(x, y):
+    pos_x = (2, 1, 2, 1, -2, -1, -2, -1)
+    pos_y = (1, 2, -1, -2, 1, 2, -1, -2)
+    possibilities = []
+    for i in range(8):
+        if x+pos_x[i] >= 0 and x+pos_x[i] <= 7 and y+pos_y[i] >= 0 and y+pos_y[i] <= 7 and chess_board[x+pos_x[i]][y+pos_y[i]] == 0:
+            possibilities.append([x+pos_x[i], y+pos_y[i]])
+
+    return possibilities
+
+def solve():
+    counter = 2
+    x = 2
+    y = 2
+    for i in range(63):
+        pos = get_possibilities(x, y)
+        minimum = pos[0]
+        for p in pos:
+            if len(get_possibilities(p[0], p[1])) <= len(get_possibilities(minimum[0], minimum[1])):
+                minimum = p
+        x = minimum[0]
+        y = minimum[1]
+        chess_board[x][y] = counter
+        counter += 1
+
+solve()    
+print_board()

@@ -3,7 +3,6 @@ import sys
 import pygame as p
 from DsImplementation import *
 import random
-
 WIDTH = HEIGHT = 512
 DIMENSION = 6
 SQ_SIZE = HEIGHT // DIMENSION
@@ -66,7 +65,7 @@ def main():
                                 green_square(screen, gs.board, location)
                                 s.push(location)
                                 if(loss(screen, gs.board, location)):
-                                    running = False  
+                                    return False
                             else:
                                 button = p.mixer.Sound("sounds/click.wav")
                                 button.play()
@@ -140,3 +139,18 @@ def loss(screen,board,location):
     if(valid_square == []):
         return True
     return False
+
+def scores(x,y,move):
+    file = open("output.txt","w")
+    points = move
+    for i in range(DIMENSION):
+        for j in range(DIMENSION):
+            points = points + 1
+            file.write(str([x,y,points])+'  ')
+    file.close()
+    f = open("output.txt", "r")
+    lines = f.readlines()
+    for line in lines:
+        read_array = line.split("  ")
+    
+    

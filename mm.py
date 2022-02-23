@@ -5,10 +5,10 @@ from solve import *
 from minimum_moves import *
 from gamestate import *
 
-pygame.init()
-screen = pygame.display.set_mode((400,400))
 
-def Menu():    
+def menu(): 
+    pygame.init()
+    screen = pygame.display.set_mode((400,400))   
     pygame.display.set_caption("                                 Choose Your Destiny !!!")
     image = pygame.image.load("images/bg.png")
     play = pygame.image.load('images/PLAY.png').convert_alpha()
@@ -49,3 +49,4 @@ def Menu():
                 pygame.quit()    
 
             pygame.display.update()
+

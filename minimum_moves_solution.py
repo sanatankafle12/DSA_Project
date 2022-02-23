@@ -6,16 +6,9 @@ class Node:
         self.x = x
         self.y = y
         self.dist = dist
-
-    def __hash__(self):
-        return hash((self.x, self.y, self.dist))
- 
-    def __eq__(self, other):
-        return (self.x, self.y, self.dist) == (other.x, other.y, other.dist)
  
 row = [2, 2, -2, -2, 1, 1, -1, -1]
 col = [-1, 1, 1, -1, 2, -2, 2, -2]
- 
  
 def isValid(x, y, N):
     return not (x < 0 or y < 0 or x >= N or y >= N)
@@ -40,7 +33,3 @@ def findShortestDistance(src, dest, N):
                 if isValid(x1, y1, N):
                     q.append(Node(x1, y1, dist + 1))
 
-if __name__ == "__main__":
-    src = Node(0,1)
-    dest = Node(7, 7)
-    print(findShortestDistance(src, dest, 8))
