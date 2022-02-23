@@ -11,9 +11,6 @@ MAX_FPS = 15
 s = Stack()
 
 def main():
-    array = [0,1,2,3,4,5]
-    start_col = random.choice(array)
-    start_row = random.choice(array)
     move = -1
     p.init()
     screen = p.display.set_mode((WIDTH+150,HEIGHT))
@@ -139,6 +136,7 @@ def loss(screen,board,location):
     if(valid_square == []):
         return True
     return False
+'''
 
 def scores(x,y,move):
     file = open("output.txt","w")
@@ -152,5 +150,8 @@ def scores(x,y,move):
     lines = f.readlines()
     for line in lines:
         read_array = line.split("  ")
+'''
+
+
     
     
