@@ -23,6 +23,8 @@ def Solve():
     image = p.transform.scale(p.image.load('images\knights.jpg'),(SQ_SIZE,SQ_SIZE))
     mark = p.transform.scale(p.image.load('images\mark.png'),(SQ_SIZE,SQ_SIZE))
     img1 = p.image.load('images\game2.png')
+    exit1 = p.image.load('images\exit.png')
+    exit_button = gamestate.Button(WIDTH+10,HEIGHT-50,exit1,screen)
     running = True
     location = ()
     drawBoard(screen, gs.board)
@@ -31,7 +33,9 @@ def Solve():
         font = p.font.Font('fsb.ttf', 20)
         score = "TIME: " + str(round(end-start,2))
         text = font.render(score, True,'green') 
-        screen.blit(text,(WIDTH+10,HEIGHT-75))   
+        screen.blit(text,(WIDTH+10,HEIGHT-75))  
+        if exit_button.draw():
+            p.quit() 
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
@@ -40,10 +44,11 @@ def Solve():
                     location = p.mouse.get_pos()
                     col = location[0]//SQ_SIZE
                     row = location[1]//SQ_SIZE
-                    location = (col,row)
-                    screen.blit(mark, p.Rect(location[0]*(SQ_SIZE),location[1]*(SQ_SIZE),(SQ_SIZE),(SQ_SIZE)))
-                    start = time.time()
-                    end = solveKT(location,screen,gs.board,image) 
+                    if(row>=0 and col>=0 and row<n and col<n):
+                        location = (col,row)
+                        screen.blit(mark, p.Rect(location[0]*(SQ_SIZE),location[1]*(SQ_SIZE),(SQ_SIZE),(SQ_SIZE)))
+                        start = time.time()
+                        end = solveKT(location,screen,gs.board,image) 
                     
         clock.tick(MAX_FPS)
         p.display.flip()
@@ -96,3 +101,4 @@ def solveKTUtil(board,curr_x,curr_y,move_x,move_y,pos):
                 return True
             board[new_x][new_y] = -1
     return False
+
