@@ -3,8 +3,9 @@ import sys
 import pygame as p
 from DsImplementation import *
 import random
+
 WIDTH = HEIGHT = 512
-DIMENSION = 6
+DIMENSION = 8
 SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 15
 
@@ -37,7 +38,7 @@ def main():
                     row = location[1]//SQ_SIZE
                     location = (col,row)
                     if check_if_empty(gs.board) == True :
-                        return False
+                        Won_screen()
                     else:
                         if(move == -1):
                             if (check_valid(screen, gs.board, location)): 
@@ -62,7 +63,8 @@ def main():
                                 green_square(screen, gs.board, location)
                                 s.push(location)
                                 if(loss(screen, gs.board, location)):
-                                    return False
+                                    p.quit()
+                                    lost_screen(move)
                             else:
                                 button = p.mixer.Sound("sounds/click.wav")
                                 button.play()
@@ -136,6 +138,41 @@ def loss(screen,board,location):
     if(valid_square == []):
         return True
     return False
+
+def lost_screen(move):
+    p.init()
+    screen = p.display.set_mode((250,250))
+    exit1 = p.image.load('images\exit2.png')
+    exit_button = gamestate.Button(30,50,exit1,screen)
+    while True:
+        font = p.font.Font('fsb.ttf',20)
+        score = "  YOU SCORED: " + str(move+1)
+        text = font.render(score, True,'green') 
+        screen.blit(text,(0,0)) 
+        if exit_button.draw():
+            p.quit()
+        for j in p.event.get():
+            if j.type == p.QUIT:
+                p.quit()
+            p.display.update()
+
+def Won_screen():
+    p.init()
+    screen = p.display.set_mode((250,250))
+    exit1 = p.image.load('images\exit2.png')
+    exit_button = gamestate.Button(30,50,exit1,screen)
+    while True:
+        font = p.font.Font('fsb.ttf',18)
+        score = "Congrats!! Solution Found"
+        text = font.render(score, True,'green') 
+        screen.blit(text,(0,0)) 
+        if exit_button.draw():
+            p.quit()
+        for j in p.event.get():
+            if j.type == p.QUIT:
+                p.quit()
+            p.display.update()
+
 '''
 
 def scores(x,y,move):
@@ -151,7 +188,3 @@ def scores(x,y,move):
     for line in lines:
         read_array = line.split("  ")
 '''
-
-
-    
-    

@@ -172,15 +172,19 @@ def check_optimal(start,end,move):
 def Won_screen():
     p.init()
     screen = p.display.set_mode((250,150))
-    screen.fill("lightblue")
+    exit1 = p.image.load('images\exit2.png')
+    exit_button = gamestate.Button(100, 100, exit1, screen)
+    screen.fill("black")
     while True:
         font = p.font.Font('fsb.ttf', 20)
         t = "           CONGRATS!!"
         t1 = "      SOLUTION FOUND :)"
-        text = font.render(t, True,'Black')
-        text1 = font.render(t1, True, 'Black')
+        text = font.render(t, True,'Green')
+        text1 = font.render(t1, True, 'Green')
         screen.blit(text,(0,50)) 
         screen.blit(text1, (0,75))
+        if exit_button.draw():
+            p.quit()
         for j in p.event.get():
             if j.type == p.QUIT:
                 p.quit()
@@ -192,18 +196,22 @@ def lost_screen(start,end,move):
     x = findShortestDistance(src, dest, DIMENSION)
     p.init()
     screen = p.display.set_mode((250,150))
-    screen.fill("lightblue")
+    exit1 = p.image.load('images\exit2.png')
+    exit_button = gamestate.Button(100, 100, exit1, screen)
+    screen.fill("black")
     while True:
         font = p.font.Font('fsb.ttf', 20)
         t = "       OOPS!!"
         t1 = "      optimal Move:" + str(x)
         t2 = "      You took:" +str(move)
-        text = font.render(t, True,'Black')
-        text1 = font.render(t1, True, 'Black')
-        text2 = font.render(t2, True, 'Black')
-        screen.blit(text,(0,50)) 
-        screen.blit(text1, (0,75))
-        screen.blit(text2, (0,100))
+        text = font.render(t, True,'Green')
+        text1 = font.render(t1, True, 'Green')
+        text2 = font.render(t2, True, 'Green')
+        screen.blit(text,(0,25)) 
+        screen.blit(text1, (0,50))
+        screen.blit(text2, (0,75))
+        if exit_button.draw():
+            p.quit()
         for j in p.event.get():
             if j.type == p.QUIT:
                 p.quit()

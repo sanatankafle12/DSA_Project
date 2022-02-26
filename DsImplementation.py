@@ -26,5 +26,5 @@ class Queue:
         self.items.append(data)
     
     def dequeue(self):
-        return self.items.pop()
+        return self.items.pop(0)
 

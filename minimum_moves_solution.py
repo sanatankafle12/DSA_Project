@@ -1,5 +1,5 @@
 import sys
-from collections import deque
+import DsImplementation
  
 class Node:
     def __init__(self, x, y, dist=0):
@@ -15,10 +15,10 @@ def isValid(x, y, N):
  
 def findShortestDistance(src, dest, N):
     visited = set()
-    q = deque()
-    q.append(src)
+    q = DsImplementation.Queue()
+    q.enqueue(src)
     while q:
-        node = q.popleft()
+        node = q.dequeue()
         x = node.x
         y = node.y
         dist = node.dist
@@ -31,5 +31,5 @@ def findShortestDistance(src, dest, N):
                 x1 = x + row[i]
                 y1 = y + col[i]
                 if isValid(x1, y1, N):
-                    q.append(Node(x1, y1, dist + 1))
+                    q.enqueue(Node(x1, y1, dist + 1))
 
