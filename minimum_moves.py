@@ -6,10 +6,12 @@ import random
 from minimum_moves_solution import *
 from mm import *
 
+
 WIDTH = HEIGHT = 512
 DIMENSION = 8
 SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 15
+
 
 s = Stack()
 
@@ -43,16 +45,20 @@ def main2():
         level = "Medium"
     else:
         level = "Difficult"
-    while running:   
+    while running:  
+
         screen.blit(img3,(WIDTH-2,0))
         font = p.font.Font('fsb.ttf', 20)
         score = "Level: "+level
         text = font.render(score, True,'green') 
         screen.blit(text,(WIDTH+10,HEIGHT-75)) 
         for e in p.event.get():
+
             if e.type == p.QUIT:
                 running = False
+
             elif e.type == p.MOUSEBUTTONDOWN:
+
                 if p.mouse.get_pressed()[0] == 1:
                     location = p.mouse.get_pos()
                     col = location[0]//SQ_SIZE
@@ -60,8 +66,10 @@ def main2():
                     location = (col,row)
                     if check_if_empty(gs.board) == True :
                         return False
+
                     else:
                         if(move == -1):
+
                             if(location == start):
                                 if (check_valid(screen, gs.board, location,move)): 
                                     move = move + 1
@@ -100,11 +108,13 @@ def drawBoard(screen,board):
                 color = 'red'
                 p.draw.rect(screen,color,p.Rect(c*SQ_SIZE,r*SQ_SIZE,SQ_SIZE,SQ_SIZE))
 
+
 def drawPieces(screen,board,image,location,move):
     screen.blit(image, p.Rect(location[0]*SQ_SIZE,location[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
     if(move == 0):
         return
     board[location[1]][location[0]] = '++'
+
 
 def check_valid(screen,board,location,move):
     if(location[0] < 0 or location[0] > (DIMENSION-1) or location[1] < 0 or location[1] > (DIMENSION-1)):
@@ -112,6 +122,7 @@ def check_valid(screen,board,location,move):
     if(board[location[1]][location[0]] == "--" or move == -1 or board[location[1]][location[0]] == "ee"):
         return True
     return False
+
 
 def green_square(screen, board, location):
     valid_square = []
@@ -134,6 +145,7 @@ def green_square(screen, board, location):
                     p.draw.rect(screen,'LightGreen',p.Rect(i[0]*SQ_SIZE,i[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
     return valid_square
 
+
 def check_if_empty(board):
     count = 0
     for i in range(DIMENSION):
@@ -144,12 +156,14 @@ def check_if_empty(board):
         return True
     return False
 
+
 def square(screen,board,location,prev_location):
     valid_square = green_square(screen, board, prev_location)
     for i in valid_square:
         if location == i:
             return True
     return False
+
 
 def get_positions():
     array = [x for x in range(DIMENSION)]
@@ -164,10 +178,12 @@ def get_positions():
     destination = (destination_col,destination_row)
     return start,destination
 
+
 def check_optimal(start,end,move):
     src = Node(start[0],start[1])
     dest = Node(end[0], end[1])
     return findShortestDistance(src, dest, DIMENSION) == move
+
 
 def Won_screen():
     p.init()
@@ -189,6 +205,7 @@ def Won_screen():
             if j.type == p.QUIT:
                 p.quit()
             p.display.update()
+
 
 def lost_screen(start,end,move):
     src = Node(start[0],start[1])

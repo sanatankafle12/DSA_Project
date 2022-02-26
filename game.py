@@ -65,6 +65,7 @@ def main():
                                 if(loss(screen, gs.board, location)):
                                     p.quit()
                                     lost_screen(move)
+                                    running = False
                             else:
                                 button = p.mixer.Sound("sounds/click.wav")
                                 button.play()
@@ -84,9 +85,11 @@ def drawBoard(screen,board):
                 color = 'red'
                 p.draw.rect(screen,color,p.Rect(c*SQ_SIZE,r*SQ_SIZE,SQ_SIZE,SQ_SIZE))
 
+
 def drawPieces(screen,board,image,location,move):
     screen.blit(image, p.Rect(location[0]*SQ_SIZE,location[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
     board[location[1]][location[0]] = '++'
+
 
 def check_valid(screen,board,location):
     if(location[0] < 0 or location[0] > (DIMENSION-1) or location[1] < 0 or location[1] > (DIMENSION-1)):
@@ -94,6 +97,7 @@ def check_valid(screen,board,location):
     if(board[location[1]][location[0]] == "--"):
         return True
     return False
+
 
 def green_square(screen, board, location):
     valid_square = []
@@ -116,6 +120,7 @@ def green_square(screen, board, location):
                     p.draw.rect(screen,'LightGreen',p.Rect(i[0]*SQ_SIZE,i[1]*SQ_SIZE,SQ_SIZE,SQ_SIZE))
     return valid_square
 
+
 def check_if_empty(board):
     count = 0
     for i in range(DIMENSION):
@@ -126,6 +131,7 @@ def check_if_empty(board):
         return True
     return False
 
+
 def square(screen,board,location,prev_location):
     valid_square = green_square(screen, board, prev_location)
     for i in valid_square:
@@ -133,32 +139,40 @@ def square(screen,board,location,prev_location):
             return True
     return False
 
+
 def loss(screen,board,location):
     valid_square = green_square(screen, board, location)
     if(valid_square == []):
         return True
     return False
 
+
 def lost_screen(move):
     p.init()
-    screen = p.display.set_mode((250,250))
+    screen = p.display.set_mode((170,150))
     exit1 = p.image.load('images\exit2.png')
     exit_button = gamestate.Button(30,50,exit1,screen)
-    while True:
+    running = True
+    while running:
         font = p.font.Font('fsb.ttf',20)
-        score = "  YOU SCORED: " + str(move+1)
+        score_text = "YOU SCORED: " 
+        score = str(move+1)
         text = font.render(score, True,'green') 
-        screen.blit(text,(0,0)) 
+        text2 = font.render(score_text, True,'green') 
+        screen.blit(text,(0,20)) 
+        screen.blit(text2,(0,0)) 
         if exit_button.draw():
-            p.quit()
+            p.quit() 
         for j in p.event.get():
             if j.type == p.QUIT:
+                sys.exit(1)
                 p.quit()
             p.display.update()
 
+
 def Won_screen():
     p.init()
-    screen = p.display.set_mode((250,250))
+    screen = p.display.set_mode((150,150))
     exit1 = p.image.load('images\exit2.png')
     exit_button = gamestate.Button(30,50,exit1,screen)
     while True:
@@ -172,19 +186,3 @@ def Won_screen():
             if j.type == p.QUIT:
                 p.quit()
             p.display.update()
-
-'''
-
-def scores(x,y,move):
-    file = open("output.txt","w")
-    points = move
-    for i in range(DIMENSION):
-        for j in range(DIMENSION):
-            points = points + 1
-            file.write(str([x,y,points])+'  ')
-    file.close()
-    f = open("output.txt", "r")
-    lines = f.readlines()
-    for line in lines:
-        read_array = line.split("  ")
-'''

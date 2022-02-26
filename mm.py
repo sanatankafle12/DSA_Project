@@ -1,8 +1,7 @@
 import pygame
 import sys
 from game import *
-#from solve import *
-from wardorff import *
+from solve import *
 from minimum_moves import *
 from gamestate import *
 
