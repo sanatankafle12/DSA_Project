@@ -4,7 +4,7 @@ import pygame as p
 from DsImplementation import *
 import random
 from minimum_moves_solution import *
-from mm import *
+from Menu import *
 
 
 WIDTH = HEIGHT = 512
