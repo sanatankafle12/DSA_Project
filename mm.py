@@ -7,6 +7,7 @@ from gamestate import *
 
 
 def menu(): 
+    
     pygame.init()
     screen = pygame.display.set_mode((400,400))   
     pygame.display.set_caption("                                 Choose Your Destiny !!!")
@@ -28,7 +29,9 @@ def menu():
     crash_sound.set_volume(0.2)
     crash_sound.play()
     while True:
+
         screen.blit(image, (0,0))
+
         if button_play.draw():
             pygame.quit()
             pygame.mixer.init()
@@ -36,13 +39,16 @@ def menu():
             button.play()
             main()
 
+
         if button_solve.draw():
             pygame.quit()
             Solve()
     
+
         if button_solve2.draw():
             pygame.quit()
             main2()
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT :
