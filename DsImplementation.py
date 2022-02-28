@@ -28,3 +28,5 @@ class Queue:
     def dequeue(self):
         return self.items.pop(0)
 
+    def show(self):
+        return [x for x in self.items]

@@ -72,15 +72,22 @@ def main2():
 
                             if(location == start):
                                 if (check_valid(screen, gs.board, location,move)): 
+                                    p.mixer.init()
+                                    button = p.mixer.Sound("sounds/move.wav")
+                                    button.play()
                                     move = move + 1
                                     drawBoard(screen, gs.board)
                                     drawPieces(screen, gs.board, image,location,move)   
                                     green_square(screen, gs.board, location) 
                                     s.push(location)
+                                
                         else:
                             prev_location = s.items[move]
                             if(square(screen, gs.board,location,prev_location) and check_valid(screen, gs.board, location,move)):
                                 move = move + 1
+                                p.mixer.init()
+                                button = p.mixer.Sound("sounds/move.wav")
+                                button.play()
                                 drawBoard(screen, gs.board)
                                 drawPieces(screen, gs.board, image,location,move) 
                                 if(location == end):
@@ -92,6 +99,9 @@ def main2():
                                         lost_screen(start,end,move)               
                                 green_square(screen, gs.board, location)
                                 s.push(location)
+                            else:
+                                button = p.mixer.Sound("sounds/click.wav")
+                                button.play()                                
 
         clock.tick(MAX_FPS)
         p.display.flip()
