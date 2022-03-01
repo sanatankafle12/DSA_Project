@@ -18,7 +18,7 @@ for i in range(n):
 
 def Solve():
     p.init()
-    num =1  
+    num = 1  
     start = 0
     end = 0
     screen = p.display.set_mode((WIDTH+150,HEIGHT))

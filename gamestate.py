@@ -29,3 +29,4 @@ class Button():
                 action = True
         self.screen.blit(self.image, (self.rect.x, self.rect.y))
         return action
+        
