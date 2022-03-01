@@ -149,7 +149,7 @@ def loss(screen,board,location):
 
 def lost_screen(move):
     p.init()
-    screen = p.display.set_mode((170,150))
+    screen = p.display.set_mode((250,150))
     exit1 = p.image.load('images\exit2.png')
     exit_button = gamestate.Button(30,50,exit1,screen)
     running = True
@@ -159,8 +159,8 @@ def lost_screen(move):
         score = str(move+1)
         text = font.render(score, True,'green') 
         text2 = font.render(score_text, True,'green') 
-        screen.blit(text,(0,20)) 
-        screen.blit(text2,(0,0)) 
+        screen.blit(text,(50,20)) 
+        screen.blit(text2,(20,0)) 
         if exit_button.draw():
             p.quit() 
         for j in p.event.get():
@@ -172,14 +172,18 @@ def lost_screen(move):
 
 def Won_screen():
     p.init()
-    screen = p.display.set_mode((150,150))
+    screen = p.display.set_mode((250,150))
     exit1 = p.image.load('images\exit2.png')
-    exit_button = gamestate.Button(30,50,exit1,screen)
+    exit_button = gamestate.Button(100, 100, exit1, screen)
+    screen.fill("black")
     while True:
-        font = p.font.Font('fsb.ttf',18)
-        score = "Congrats!! Solution Found"
-        text = font.render(score, True,'green') 
-        screen.blit(text,(0,0)) 
+        font = p.font.Font('fsb.ttf', 20)
+        t = "           CONGRATS!!"
+        t1 = "      SOLUTION FOUND :)"
+        text = font.render(t, True,'Green')
+        text1 = font.render(t1, True, 'Green')
+        screen.blit(text,(0,50)) 
+        screen.blit(text1, (0,75))
         if exit_button.draw():
             p.quit()
         for j in p.event.get():

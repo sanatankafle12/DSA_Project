@@ -243,4 +243,3 @@ def lost_screen(start,end,move):
             if j.type == p.QUIT:
                 p.quit()
             p.display.update()
-    
