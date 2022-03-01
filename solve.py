@@ -49,7 +49,7 @@ def Solve():
                         location = (col,row)
                         screen.blit(mark, p.Rect(location[0]*(SQ_SIZE),location[1]*(SQ_SIZE),(SQ_SIZE),(SQ_SIZE)))
                         start = time.time()
-                        tour(num, [], location, screen,start)
+                        tour(num, s1.show(), location, screen,start)
 
         clock.tick(MAX_FPS)
         p.display.flip()
@@ -98,36 +98,36 @@ def sort_lonely_neighbors(board,to_visit):
 
 
 def tour(n, path, to_visit,screen,start):
-        exit1 = p.image.load('images\exit.png')
-        exit_button = gamestate.Button(WIDTH+10,HEIGHT-50,exit1,screen)
-        board[to_visit[0]][to_visit[1]] = n
-        path.append(to_visit)
-        q1.enqueue(to_visit) 
-        if n == 8 * 8:
+    exit1 = p.image.load('images\exit.png')
+    exit_button = gamestate.Button(WIDTH+10,HEIGHT-50,exit1,screen)
+    board[to_visit[0]][to_visit[1]] = n
+    s1.push(to_visit)
+    q1.enqueue(to_visit) 
+    if n == 8 * 8:
 
-            end = time.time()
-            draw_board(screen,end,start)
-            while True:
+        end = time.time()
+        draw_board(screen,end,start)
+        while True:
 
-                if exit_button.draw():
+            if exit_button.draw():
+                sys.exit(1)
+                p.quit()
+            for e in p.event.get():
+                if e.type == p.QUIT:
                     sys.exit(1)
                     p.quit()
-                for e in p.event.get():
-                    if e.type == p.QUIT:
-                        sys.exit(1)
-                        p.quit()
-                p.display.update()
+            p.display.update()
 
-        else:
-            sorted_neighbours = sort_lonely_neighbors(board,to_visit)
-            for neighbor in sorted_neighbours:
-                tour(n+1, path, neighbor,screen,start)
-            board[to_visit[0]][to_visit[1]] = 0
-            try:
-                x = path.pop()
-                q1.items.remove(x)
-            except IndexError or ValueError:
-                sys.exit(1)
+    else:
+        sorted_neighbours = sort_lonely_neighbors(board,to_visit)
+        for neighbor in sorted_neighbours:
+            tour(n+1, s1.show(), neighbor,screen,start)
+        board[to_visit[0]][to_visit[1]] = 0
+        try:
+            x = s1.pop()
+            q1.items.remove(x)
+        except IndexError or ValueError:
+            sys.exit(1)
 
 
 def draw_board(screen,end,start):
@@ -160,3 +160,4 @@ def draw_board(screen,end,start):
 def Solution(screen,j,text):
     screen.blit(text, p.Rect(j[0]*(SQ_SIZE),j[1]*(SQ_SIZE),(SQ_SIZE),(SQ_SIZE)))
 
+Solve()
