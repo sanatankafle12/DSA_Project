@@ -159,5 +159,3 @@ def draw_board(screen,end,start):
 
 def Solution(screen,j,text):
     screen.blit(text, p.Rect(j[0]*(SQ_SIZE),j[1]*(SQ_SIZE),(SQ_SIZE),(SQ_SIZE)))
-
-Solve()
