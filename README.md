@@ -6,7 +6,7 @@ We have also implemented a minimum steps From knight where, User is supposed to 
 
 The cross in the board shows the placement of the knight and numbers show the path the knight has followed.<br>
 
-<img src="https://github.com/sanatankafle12/DSA_Project/assets/42962016/ced40213-facb-4541-a706-f9c0812520dd" height = 250px><be>
+<img src="https://github.com/sanatankafle12/DSA_Project/assets/42962016/ced40213-facb-4541-a706-f9c0812520dd" height = 250px><br>
 Here, Pink square is where knight starts, Orange is the end position and red defines the places knight has travelled<br>
 
 <h1>Requirements</h1>
@@ -15,3 +15,5 @@ Here, Pink square is where knight starts, Orange is the end position and red def
   <li>Pygame</li>
 </ul>
 
+<h1>To run</h1>
+Clone the repository, download requirements and just type python main.py
